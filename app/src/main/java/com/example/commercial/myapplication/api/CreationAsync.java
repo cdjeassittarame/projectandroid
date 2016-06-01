@@ -28,7 +28,7 @@ public class CreationAsync extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        loadingDialog = ProgressDialog.show(this.context, "Please wait", "Loading... deuxieme commentaire");
+        loadingDialog = ProgressDialog.show(this.context, "Please wait", "..");
     }
 //permet de se connecter en fonction des information recu donc du nombre de parametre envoyer si 1 affichage de le base de donner en mode liste
     //si 3 connexion si 5 creation de la base de donnee
