@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--gere le layout principal -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_blue_grey_950"
+   >
+
+    <!--gere le layout de la partie video
+    match_parent faire la meme taille que lecran
+    wrap_content Pour demander au Widget d’occuper une taille naturelle
+    (la taille de son contenu pour le texte par exemple). S’il est trop gros par rapport à la taille disponible.
+    Android s’occupera par exemple de couper le texte s’il n’y a plus de place.
+    fill_parent : Dans ce cas on demande au composant d’occuper tout l’espace disponible chez son conteneur parent (après le placement des autres widgets).
+    android:layout_centerHorizontal="true" c'est deux fonction permettent de centrer horizontalement et verticalement
+    android:layout_centerVertical="true"
+    layout_gravity="center" permet de centrer la video dans lemplacement de lobjet video
+
+
+    -->
+    <VideoView
+        android:id="@+id/VideoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        />
+
+</LinearLayout>
