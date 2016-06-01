@@ -1,19 +1,17 @@
 package com.example.commercial.myapplication;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.Toast;
+
 
 import com.example.commercial.myapplication.api.CreationAsync;
 import com.example.commercial.myapplication.api.ImageDownloaderTask;
@@ -112,7 +110,7 @@ public class bouquet extends ListActivity {
         startActivity(it);
     }
 
-   @Override
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 

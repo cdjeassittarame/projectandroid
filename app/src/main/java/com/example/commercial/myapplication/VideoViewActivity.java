@@ -21,7 +21,6 @@ public class VideoViewActivity extends AppCompatActivity {
     ProgressDialog pDialog;
     VideoView videoview;
 
-    android.app.ActionBar actionBar;
 
     // Insert your Video URL
     String VideoURL = null;
@@ -29,7 +28,8 @@ public class VideoViewActivity extends AppCompatActivity {
     Toast nom_chaine;
 
     String nom = null;
-//cette classe permet d'utiliser le lecteur afin de streamer notre flux
+
+    //cette classe permet d'utiliser le lecteur afin de streamer notre flux
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);//tout les variable constructeur de la classe mere
@@ -58,12 +58,12 @@ public class VideoViewActivity extends AppCompatActivity {
 
         nom_chaine = Toast.makeText(getApplicationContext(), nom, Toast.LENGTH_SHORT);
 
-        nom_chaine.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
+        nom_chaine.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
 
-     try {
+        try {
             // Start the MediaController
             MediaController mediacontroller = new MediaController(
-                    VideoViewActivity.this,false);
+                    VideoViewActivity.this, false);
             mediacontroller.setAnchorView(videoview);
 
             // Get the URL from String VideoURL
@@ -71,8 +71,8 @@ public class VideoViewActivity extends AppCompatActivity {
             videoview.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                        nom_chaine.show();
-                        return false;
+                    nom_chaine.show();
+                    return false;
                 }
             });
 

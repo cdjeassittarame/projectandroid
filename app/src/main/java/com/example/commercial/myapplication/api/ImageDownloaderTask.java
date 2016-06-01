@@ -2,7 +2,7 @@ package com.example.commercial.myapplication.api;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
@@ -49,6 +49,7 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
             }
         }
     }
+
     private Bitmap downloadBitmap(String url) {
         HttpURLConnection urlConnection = null;
         try {

@@ -4,7 +4,6 @@ package com.example.commercial.myapplication;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -29,10 +28,8 @@ public class MainActivity extends AppCompatActivity {
     String passwordtxt;
     EditText password;
     EditText username;
-    WifiManager wifi;
 
 
-    public static final String USER_NAME = "USERNAME";
     private static String PHPurl = "http://www.tv.kabtel.com/new1.php?";
 
     @Override
@@ -51,20 +48,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-//methode permettant de verifier si le smartphone  a active le reseaux ou pas
+
+    //methode permettant de verifier si le smartphone  a active le reseaux ou pas
     public boolean isNetworkOnline() {
-        boolean status=false;
-        try{
+        boolean status = false;
+        try {
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getNetworkInfo(0);
-            if (netInfo != null && netInfo.getState()==NetworkInfo.State.CONNECTED) {
-                status= true;
-            }else {
+            if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                status = true;
+            } else {
                 netInfo = cm.getNetworkInfo(1);
-                if(netInfo!=null && netInfo.getState()==NetworkInfo.State.CONNECTED)
-                    status= true;
+                if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED)
+                    status = true;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -73,16 +71,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void invokeLogin(View view){
+    public void invokeLogin(View view) {
 
         if (isNetworkOnline()) {
             usernametxt = username.getText().toString();
             passwordtxt = password.getText().toString();
 
             login(usernametxt, passwordtxt);
-        }
-        else
-        {
+        } else {
             Toast.makeText(getApplicationContext(), "Aucune connexion internet", Toast.LENGTH_LONG).show();
         }
 
@@ -93,9 +89,7 @@ public class MainActivity extends AppCompatActivity {
         if (isNetworkOnline()) {
             Intent intent2 = new Intent(MainActivity.this, CreateAccount.class);
             startActivity(intent2);
-        }
-        else
-        {
+        } else {
             Toast.makeText(getApplicationContext(), "Aucune connexion internet", Toast.LENGTH_LONG).show();
         }
 

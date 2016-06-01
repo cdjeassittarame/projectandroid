@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.commercial.myapplication.api.CreationAsync;
 
 import java.util.Calendar;
-import java.util.StringTokenizer;
+
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,31 +70,33 @@ public class CreateAccount extends AppCompatActivity {
         np3.setWrapSelectorWheel(false);
 
         Calendar dateyear = Calendar.getInstance();
-        int agelimite;
+
 
         yearnow = dateyear.get(dateyear.YEAR);
 
-        np.setOnValueChangedListener( new NumberPicker.OnValueChangeListener() {
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                if(newVal>9){
-                    JJ.setText(String.valueOf(newVal)+"/");
-                }else{
-                    JJ.setText("0"+String.valueOf(newVal)+"/");
-                }            }
+                if (newVal > 9) {
+                    JJ.setText(String.valueOf(newVal) + "/");
+                } else {
+                    JJ.setText("0" + String.valueOf(newVal) + "/");
+                }
+            }
         });
 
-        np2.setOnValueChangedListener( new NumberPicker.OnValueChangeListener() {
+        np2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                if(newVal>9){
-                    MM.setText(String.valueOf(newVal)+"/");
-                }else{
-                    MM.setText("0"+String.valueOf(newVal)+"/");
-                }            }
+                if (newVal > 9) {
+                    MM.setText(String.valueOf(newVal) + "/");
+                } else {
+                    MM.setText("0" + String.valueOf(newVal) + "/");
+                }
+            }
         });
 
-        np3.setOnValueChangedListener( new NumberPicker.OnValueChangeListener() {
+        np3.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 YYYY.setText(String.valueOf(newVal));
@@ -115,43 +117,38 @@ public class CreateAccount extends AppCompatActivity {
         String passwordtxt = password.getText().toString();
         String emailtxt = email_to_login.getText().toString();
         String Confpasswordtxt = Confpassword.getText().toString();
-        String datetxt= JJ.getText().toString() + MM.getText().toString() + YYYY.getText().toString();
+        String datetxt = JJ.getText().toString() + MM.getText().toString() + YYYY.getText().toString();
 
-        Log.i("CLE A VOIR","VALEUR DE DATETXT "+datetxt);
+        Log.i("CLE A VOIR", "VALEUR DE DATETXT " + datetxt);
 
-        if (!usernametxt.equals("") && !passwordtxt.equals("") && !emailtxt.equals("") && !Confpasswordtxt.equals("") ) {
+        if (!usernametxt.equals("") && !passwordtxt.equals("") && !emailtxt.equals("") && !Confpasswordtxt.equals("")) {
             if (!isEmailValid(emailtxt)) {
                 Toast.makeText(getApplicationContext(), "Adresse mail invalid", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            if(!Lengthword(passwordtxt))
-            {
+            if (!Lengthword(passwordtxt)) {
                 Toast.makeText(getApplicationContext(), "Mots de passe minimum 8 caracteres", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            if(!Lengthword(usernametxt))
-            {
+            if (!Lengthword(usernametxt)) {
                 Toast.makeText(getApplicationContext(), "Identifiant minimum 8 caracteres", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            if(!Confpasswordtxt.equals(passwordtxt))
-            {
+            if (!Confpasswordtxt.equals(passwordtxt)) {
                 Toast.makeText(getApplicationContext(), "Mots de passe différent", Toast.LENGTH_LONG).show();
                 return;
             }
 
 
-            if(JJ.getText().toString().equals("JJ/ ") || MM.getText().toString().equals("MM/ ") || YYYY.getText().toString().equals("AAAA "))
-            {
+            if (JJ.getText().toString().equals("JJ/ ") || MM.getText().toString().equals("MM/ ") || YYYY.getText().toString().equals("AAAA ")) {
                 Toast.makeText(getApplicationContext(), "Date invalid", Toast.LENGTH_LONG).show();
                 return;
             }
 
-        }
-        else {
+        } else {
             Toast.makeText(getApplicationContext(), "Veuillez remplir les champs", Toast.LENGTH_LONG).show();
             return;
         }
@@ -159,7 +156,8 @@ public class CreateAccount extends AppCompatActivity {
         creation(usernametxt, passwordtxt, emailtxt, datetxt);
         Toast.makeText(getApplicationContext(), "Compte Créer", Toast.LENGTH_LONG).show();
     }
-//methode qui permet de savoir si ladresse mail rentré est valide ou pas
+
+    //methode qui permet de savoir si ladresse mail rentré est valide ou pas
     public static boolean isEmailValid(String email) {
         boolean isValid = false;
 
@@ -174,35 +172,32 @@ public class CreateAccount extends AppCompatActivity {
         return isValid;
     }
 
-    public static boolean Lengthword(String word)
-    {
+    public static boolean Lengthword(String word) {
         int taille = word.length();
         boolean result = false;
 
-        if(taille < 8) {
+        if (taille < 8) {
             result = false;
-        }
-
-        else
+        } else
             result = true;
 
-        return(result);
+        return (result);
     }
 
-    private void creation(final String username, String password, String email,String datetxt) {
+    private void creation(final String username, String password, String email, String datetxt) {
         CreationAsync la = new CreationAsync(CreateAccount.this);
-        la.execute(username, password,PHPurl ,email,datetxt);
+        la.execute(username, password, PHPurl, email, datetxt);
         String s = null;
         try {
             s = la.get().trim();
 
-            if(s.equalsIgnoreCase("ajouter")){
+            if (s.equalsIgnoreCase("ajouter")) {
                 Intent intent = new Intent(CreateAccount.this, MainActivity.class);
                 //intent.putExtra(USER_NAME, username);
 
                 startActivity(intent);
                 finish();
-            }else {
+            } else {
                 Toast.makeText(getApplicationContext(), "Identifiant existant", Toast.LENGTH_LONG).show();
             }
         } catch (InterruptedException e) {

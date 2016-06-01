@@ -30,7 +30,8 @@ public class CreationAsync extends AsyncTask<String, Void, String> {
         super.onPreExecute();
         loadingDialog = ProgressDialog.show(this.context, "Please wait", "Loading...");
     }
-//permet de se connecter en fonction des information recu donc du nombre de parametre envoyer si 1 affichage de le base de donner en mode liste
+
+    //permet de se connecter en fonction des information recu donc du nombre de parametre envoyer si 1 affichage de le base de donner en mode liste
     //si 3 connexion si 5 creation de la base de donnee
     @Override
     protected String doInBackground(String... params) {
@@ -42,25 +43,25 @@ public class CreationAsync extends AsyncTask<String, Void, String> {
         String pass = params[1];
         StringBuilder url = new StringBuilder(params[2]);
         String email = "";
-        String date="";
+        String date = "";
 
 
-        if(params.length >= nbreParam){
+        if (params.length >= nbreParam) {
             email = params[3];
-            date=params[4];
+            date = params[4];
         }
 
         InputStream is = null;
 
-        url.append("username="+uname+"&password="+pass+"&email_to_login="+email+"&date="+date);
+        url.append("username=" + uname + "&password=" + pass + "&email_to_login=" + email + "&date=" + date);
 
         String result = null;
 
-        try{
+        try {
             //creation objet URL a partir de de la stringURL
             URL javaUrl = new URL(url.toString());
             //ouvre la connection a partir de lobjet javaUrl
-            HttpURLConnection httpURLConnection= (HttpURLConnection) javaUrl.openConnection();
+            HttpURLConnection httpURLConnection = (HttpURLConnection) javaUrl.openConnection();
             //JE STIPULE QUE JE VAIS ENVOYER ET RECEVOIR DES INFORMATIONS
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
@@ -71,7 +72,7 @@ public class CreationAsync extends AsyncTask<String, Void, String> {
 
             String line = null;
             //Je recupere la reponse de la connection si elle est ok ou pas
-            status =httpURLConnection.getResponseCode();
+            status = httpURLConnection.getResponseCode();
 
             switch (status) {
                 //bufferReader permet de lire ce qui a ete recu
@@ -86,7 +87,7 @@ public class CreationAsync extends AsyncTask<String, Void, String> {
             }
 
             result = sb.toString();
-        }  catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -95,7 +96,7 @@ public class CreationAsync extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String result){
+    protected void onPostExecute(String result) {
         loadingDialog.dismiss();
     }
 }
