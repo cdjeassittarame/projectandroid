@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,6 +45,8 @@ public class bouquet extends ListActivity {
 
         CreationAsync creationAsync = new CreationAsync(this);
         creationAsync.execute("", "", "http://www.tv.kabtel.com/AjoutVideo.php?");
+        int age=getIntent().getIntExtra("age",-1);
+        Log.i("agerecu", String.valueOf(age));
 
 
         String resultat = null;

@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,10 +36,13 @@ public class MainActivity extends AppCompatActivity {
     String passwordtxt;
     EditText password;
     EditText username;
+    Calendar dateyear = Calendar.getInstance();
+    int ageuser;
 
 
     private static String PHPurl = "http://www.tv.kabtel.com/new1.php?";
     private static String PHPurl2 = "http://www.tv.kabtel.com/recup.php?";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         CreationAsync la = new CreationAsync(MainActivity.this);
         CreationAsync la2 = new CreationAsync(MainActivity.this);
         la.execute(username, password, PHPurl);
-        la2.execute(username,password,PHPurl2);
+        la2.execute(username, password, PHPurl2);
 
         String resultat = null;
         try {
@@ -119,7 +123,12 @@ public class MainActivity extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(jsonObject.getString("resultat"));
             for (int i = 0; i < jsonArray.length(); i++) {
                 String born = jsonArray.getJSONObject(i).getString("born");
-                Log.i("naissance",born);
+                String values[]  = born.split("/");
+                Log.i("annee",values[2].trim());
+                int annneeuser=Integer.parseInt(values[2]);
+                int yearnow = dateyear.get(dateyear.YEAR);
+                ageuser=yearnow-annneeuser;
+
 
             }
 
@@ -137,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             s = la.get().trim();
             if (s.equalsIgnoreCase("success")) {
                 Intent intent = new Intent(MainActivity.this, bouquet.class);
-                //intent.putExtra(USER_NAME, username);
+                intent.putExtra("age", ageuser);
 
                 startActivity(intent);
                 //finish();
