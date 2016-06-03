@@ -45,6 +45,7 @@ public class bouquet extends ListActivity {
         CreationAsync creationAsync = new CreationAsync(this);
         creationAsync.execute("", "", "http://www.tv.kabtel.com/AjoutVideo.php?");
 
+
         String resultat = null;
         try {
             resultat = creationAsync.get();

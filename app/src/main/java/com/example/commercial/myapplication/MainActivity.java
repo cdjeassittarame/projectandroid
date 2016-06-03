@@ -6,15 +6,22 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.commercial.myapplication.api.CreationAsync;
+import com.example.commercial.myapplication.metier.Chaine;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
@@ -31,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static String PHPurl = "http://www.tv.kabtel.com/new1.php?";
-
+    private static String PHPurl2 = "http://www.tv.kabtel.com/recup.php?";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +106,31 @@ public class MainActivity extends AppCompatActivity {
 
     private void login(final String username, String password) {
         CreationAsync la = new CreationAsync(MainActivity.this);
+        CreationAsync la2 = new CreationAsync(MainActivity.this);
         la.execute(username, password, PHPurl);
+        la2.execute(username,password,PHPurl2);
+
+        String resultat = null;
+        try {
+            resultat = la2.get();
+//Le JSON est un format qui permet de recuperer le contenue qu fichier php qui lui est aussi dans un format concue pour le JSON le JSON va le recuperer le decomposer corrctement afin de
+            // le ranger dans notre liste
+            JSONObject jsonObject = new JSONObject(resultat);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("resultat"));
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String born = jsonArray.getJSONObject(i).getString("born");
+                Log.i("naissance",born);
+
+            }
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         String s = null;
         try {
