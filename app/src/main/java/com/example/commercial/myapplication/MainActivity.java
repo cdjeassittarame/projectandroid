@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             login(usernametxt, passwordtxt);
         } else {
-            Toast.makeText(getApplicationContext(), "Aucune connexio internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Aucune connexion internet", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -123,11 +123,11 @@ public class MainActivity extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(jsonObject.getString("resultat"));
             for (int i = 0; i < jsonArray.length(); i++) {
                 String born = jsonArray.getJSONObject(i).getString("born");
-                String values[]  = born.split("/");
-                Log.i("annee",values[2].trim());
-                int annneeuser=Integer.parseInt(values[2]);
+                String values[] = born.split("/");
+                Log.i("annee", values[2].trim());
+                int annneeuser = Integer.parseInt(values[2]);
                 int yearnow = dateyear.get(dateyear.YEAR);
-                ageuser=yearnow-annneeuser;
+                ageuser = yearnow - annneeuser;
 
 
             }
