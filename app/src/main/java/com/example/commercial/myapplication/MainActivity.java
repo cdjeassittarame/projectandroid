@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             login(usernametxt, passwordtxt);
         } else {
-            Toast.makeText(getApplicationContext(), "Aucune connexion internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Aucune connexio internet", Toast.LENGTH_LONG).show();
         }
 
     }

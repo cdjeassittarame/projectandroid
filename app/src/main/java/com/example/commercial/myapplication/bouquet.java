@@ -45,7 +45,7 @@ public class bouquet extends ListActivity {
 
         CreationAsync creationAsync = new CreationAsync(this);
         creationAsync.execute("", "", "http://www.tv.kabtel.com/AjoutVideo.php?");
-        int age=getIntent().getIntExtra("age",-1);
+        int age = getIntent().getIntExtra("age", -1);
         Log.i("agerecu", String.valueOf(age));
 
 
