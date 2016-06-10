@@ -46,7 +46,7 @@ public class bouquet extends ListActivity {
         CreationAsync creationAsync = new CreationAsync(this);
         creationAsync.execute("", "", "http://www.tv.kabtel.com/AjoutVideo.php?");
         int age = getIntent().getIntExtra("age", -1);
-        Log.i("agerecu", String.valueOf(age));
+        Log.i("agereu", String.valueOf(age));
 
 
         String resultat = null;
@@ -61,7 +61,7 @@ public class bouquet extends ListActivity {
                 String lienChaine = jsonArray.getJSONObject(i).getString("lienChaine");
                 String lienLogo = jsonArray.getJSONObject(i).getString("logoChaine");
                 String agelimit = jsonArray.getJSONObject(i).getString("AgeLimit");
-                
+
                 Chaine chaine = new Chaine(nom, lienChaine);
                 chaine.setLienLogo(lienLogo);
                 chaine.setLogo(new ImageView(this));
