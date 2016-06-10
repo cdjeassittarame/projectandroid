@@ -14,6 +14,7 @@ public class Chaine {
     private String nom;
     private String lienStream;
     private String lienLogo;
+    private int agerequis;
 
     public Chaine() {
     }
@@ -29,9 +30,10 @@ public class Chaine {
         this.nom = nom;
     }
 
-    public Chaine(String nom, String lienChaine) {
+    public Chaine(String nom, String lienChaine, int agerequis) {
         this.nom = nom;
         this.lienStream = lienChaine;
+        this.agerequis = agerequis;
     }
 
     public ImageView getLogo() {
@@ -59,9 +61,17 @@ public class Chaine {
         this.nom = nom;
     }
 
+    public void setAge(int agerequis) {
+        this.agerequis = agerequis;
+    }
+
+    public int getAge() {
+        return agerequis;
+    }
+
     public void setLogo(Bitmap b) {
         logo.setImageBitmap(b);
-        logoBitmap=b;
+        logoBitmap = b;
 
     }
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.example.commercial.myapplication.api.CreationAsync;
@@ -34,6 +35,8 @@ public class bouquet extends ListActivity {
     private List<Chaine> chaineList = new ArrayList<Chaine>();
     //adapter pour mettre en page voir le fichier java
     private MyAdapterChaine myAdapter;
+    String agelimit;
+    int ageutilisateur;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +48,8 @@ public class bouquet extends ListActivity {
 
         CreationAsync creationAsync = new CreationAsync(this);
         creationAsync.execute("", "", "http://www.tv.kabtel.com/AjoutVideo.php?");
-        int age = getIntent().getIntExtra("age", -1);
-        Log.i("agereu", String.valueOf(age));
+        ageutilisateur = getIntent().getIntExtra("age", -1);
+        Log.i("agereu", String.valueOf(ageutilisateur));
 
 
         String resultat = null;
@@ -60,11 +63,16 @@ public class bouquet extends ListActivity {
                 String nom = jsonArray.getJSONObject(i).getString("nom");
                 String lienChaine = jsonArray.getJSONObject(i).getString("lienChaine");
                 String lienLogo = jsonArray.getJSONObject(i).getString("logoChaine");
-                String agelimit = jsonArray.getJSONObject(i).getString("AgeLimit");
+                agelimit = jsonArray.getJSONObject(i).getString("AgeLimit");
+                Log.i("recuperation", agelimit);
 
-                Chaine chaine = new Chaine(nom, lienChaine);
+                int agerequis = Integer.parseInt(agelimit);
+                Log.i("agerequis", String.valueOf(agerequis));
+
+                Chaine chaine = new Chaine(nom, lienChaine,agerequis);
                 chaine.setLienLogo(lienLogo);
                 chaine.setLogo(new ImageView(this));
+
                 chaineList.add(chaine);
             }
 
@@ -108,12 +116,19 @@ public class bouquet extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         //Toast.makeText(this, this.chaineList.get(position).getNom(), Toast.LENGTH_SHORT).show();
-        Chaine c = chaineList.get(position);
-        Intent it = new Intent(this, VideoViewActivity.class);
-        it.putExtra("lien", c.getLienStream());
-        it.putExtra("nom", c.getNom());
 
-        startActivity(it);
+
+            Chaine c = chaineList.get(position);
+        if (ageutilisateur>=c.getAge()) {
+            Intent it = new Intent(this, VideoViewActivity.class);
+            it.putExtra("lien", c.getLienStream());
+            it.putExtra("nom", c.getNom());
+
+            startActivity(it);
+            Toast.makeText(getApplicationContext(), "on rentre", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "vous n'avez pas l'age requis pour cette video...", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
