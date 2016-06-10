@@ -60,6 +60,8 @@ public class bouquet extends ListActivity {
                 String nom = jsonArray.getJSONObject(i).getString("nom");
                 String lienChaine = jsonArray.getJSONObject(i).getString("lienChaine");
                 String lienLogo = jsonArray.getJSONObject(i).getString("logoChaine");
+                String agelimit = jsonArray.getJSONObject(i).getString("AgeLimit");
+                
                 Chaine chaine = new Chaine(nom, lienChaine);
                 chaine.setLienLogo(lienLogo);
                 chaine.setLogo(new ImageView(this));
