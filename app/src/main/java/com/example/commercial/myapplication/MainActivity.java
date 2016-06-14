@@ -2,9 +2,11 @@ package com.example.commercial.myapplication;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -32,12 +34,19 @@ public class MainActivity extends AppCompatActivity {
 
     Button button2;
 
+    Button b1;
+
     String usernametxt;
     String passwordtxt;
     EditText password;
     EditText username;
     Calendar dateyear = Calendar.getInstance();
     int ageuser;
+    public static final String MyPREFERENCES = "MyPrefs";
+    public static final String Name = "nameKey";
+    public static final String password2 = "password";
+
+    SharedPreferences sharedpreferences;
 
 
     private static String PHPurl = "http://www.tv.kabtel.com/new1.php?";
@@ -46,16 +55,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        if (!sharedpreferences.getString(Name, "").equals("")) {
+
+            Intent intent = new Intent(MainActivity.this, bouquet.class);
+            startActivity(intent);
+            finish();
+        }
         // Get the layout from video_main.xml
         setContentView(R.layout.activity_main);
 
         // Locate the button in activity_main.xml
+        b1 = (Button) findViewById(R.id.button);
         button = (Button) findViewById(R.id.MyButton);
 
         button2 = (Button) findViewById(R.id.MyButton2);
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
+
+
+        username.setText(sharedpreferences.getString(Name, ""));
 
 
     }
@@ -87,7 +107,12 @@ public class MainActivity extends AppCompatActivity {
         if (isNetworkOnline()) {
             usernametxt = username.getText().toString();
             passwordtxt = password.getText().toString();
-
+            String n = username.getText().toString();
+            String ph = password.getText().toString();
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Name, n);
+            editor.putString(password2, ph);
+            editor.commit();
             login(usernametxt, passwordtxt);
         } else {
             Toast.makeText(getApplicationContext(), "Aucune connexion internet", Toast.LENGTH_LONG).show();
@@ -183,6 +208,17 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /*public void clearSharedPreference() {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+
+        settings = MainActivity.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        editor = settings.edit();
+
+        editor.clear();
+        editor.commit();
+    }*/
 
 
 }

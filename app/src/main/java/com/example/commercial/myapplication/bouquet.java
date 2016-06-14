@@ -1,7 +1,9 @@
 package com.example.commercial.myapplication;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -9,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,13 +40,15 @@ public class bouquet extends ListActivity {
     private MyAdapterChaine myAdapter;
     String agelimit;
     int ageutilisateur;
+    Button b1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Get the layout from video_main.xml
         setContentView(R.layout.bouquet_main);
-
+        SharedPreferences sharedpreferences;
+        final MainActivity la2 = new MainActivity();
         chaineList = new ArrayList<Chaine>();
 
         CreationAsync creationAsync = new CreationAsync(this);
@@ -69,7 +74,7 @@ public class bouquet extends ListActivity {
                 int agerequis = Integer.parseInt(agelimit);
                 Log.i("agerequis", String.valueOf(agerequis));
 
-                Chaine chaine = new Chaine(nom, lienChaine,agerequis);
+                Chaine chaine = new Chaine(nom, lienChaine, agerequis);
                 chaine.setLienLogo(lienLogo);
                 chaine.setLogo(new ImageView(this));
 
@@ -84,6 +89,25 @@ public class bouquet extends ListActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        b1 = (Button) findViewById(R.id.button2);
+
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences settings;
+                SharedPreferences.Editor editor;
+
+                settings = getSharedPreferences(la2.MyPREFERENCES, Context.MODE_PRIVATE);
+                editor = settings.edit();
+
+                editor.clear();
+                editor.commit();
+                Intent intent = new Intent(bouquet.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         myAdapter = new MyAdapterChaine(this, chaineList);
@@ -118,8 +142,8 @@ public class bouquet extends ListActivity {
         //Toast.makeText(this, this.chaineList.get(position).getNom(), Toast.LENGTH_SHORT).show();
 
 
-            Chaine c = chaineList.get(position);
-        if (ageutilisateur>=c.getAge()) {
+        Chaine c = chaineList.get(position);
+        if (ageutilisateur >= c.getAge()) {
             Intent it = new Intent(this, VideoViewActivity.class);
             it.putExtra("lien", c.getLienStream());
             it.putExtra("nom", c.getNom());
