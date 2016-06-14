@@ -6,15 +6,14 @@ import android.widget.ImageView;
 /**
  * Created by kabtel on 10/05/16.
  */
-//fichier construicteur qui permet de creer les chaine pour notre liste avec setteur et getteur
 public class Chaine {
 
     private ImageView logo;
-    private Bitmap logoBitmap;
     private String nom;
     private String lienStream;
     private String lienLogo;
-    private int agerequis;
+    private Bitmap logoBitmap;
+
 
     public Chaine() {
     }
@@ -30,14 +29,12 @@ public class Chaine {
         this.nom = nom;
     }
 
-    public Chaine(String nom, String lienChaine, int agerequis) {
+    public Chaine(String nom, String lienChaine) {
         this.nom = nom;
         this.lienStream = lienChaine;
-        this.agerequis = agerequis;
     }
 
     public ImageView getLogo() {
-
         return logo;
     }
 
@@ -61,18 +58,9 @@ public class Chaine {
         this.nom = nom;
     }
 
-    public void setAge(int agerequis) {
-        this.agerequis = agerequis;
-    }
-
-    public int getAge() {
-        return agerequis;
-    }
-
     public void setLogo(Bitmap b) {
         logo.setImageBitmap(b);
         logoBitmap = b;
-
     }
 
     public String getLienLogo() {
@@ -90,5 +78,6 @@ public class Chaine {
     public Bitmap getLogoBitmap() {
         return logoBitmap;
     }
+
 
 }

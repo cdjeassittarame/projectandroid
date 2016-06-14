@@ -2,7 +2,6 @@ package com.example.commercial.myapplication.api;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
@@ -17,9 +16,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by chris on 30/05/16.
+ * Created by kabtel on 30/05/16.
  */
 public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
+
     private final WeakReference<ImageView> imageViewReference;
 
     public ImageDownloaderTask(ImageView imageView) {
@@ -49,7 +49,6 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
             }
         }
     }
-
     private Bitmap downloadBitmap(String url) {
         HttpURLConnection urlConnection = null;
         try {

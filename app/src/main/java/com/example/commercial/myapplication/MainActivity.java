@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,46 +15,51 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.commercial.myapplication.api.CreationAsync;
-import com.example.commercial.myapplication.metier.Chaine;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     Button button;
-
     Button button2;
-
     Button b1;
 
     String usernametxt;
     String passwordtxt;
     EditText password;
     EditText username;
-    Calendar dateyear = Calendar.getInstance();
-    int ageuser;
+
+    /*
+    private static final String PREFS = "PREFS";
+    private static final String PREFS_AGE = "PREFS_AGE";
+    private static final String PREFS_id = "PREFS_id";
+    private static final String PREFS_mdp = "PREFS_mdp";
+
+    SharedPreferences sharedPreferences;
+*/
+
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String Name = "nameKey";
     public static final String password2 = "password";
 
     SharedPreferences sharedpreferences;
 
-
     private static String PHPurl = "http://www.tv.kabtel.com/new1.php?";
     private static String PHPurl2 = "http://www.tv.kabtel.com/recup.php?";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Get the layout from video_main.xml
+
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         if (!sharedpreferences.getString(Name, "").equals("")) {
 
@@ -62,11 +67,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        // Get the layout from video_main.xml
+
         setContentView(R.layout.activity_main);
 
         // Locate the button in activity_main.xml
+
         b1 = (Button) findViewById(R.id.button);
+
         button = (Button) findViewById(R.id.MyButton);
 
         button2 = (Button) findViewById(R.id.MyButton2);
@@ -74,50 +81,48 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
 
-
         username.setText(sharedpreferences.getString(Name, ""));
-
 
     }
 
-    //methode permettant de verifier si le smartphone  a active le reseaux ou pas
     public boolean isNetworkOnline() {
-        boolean status = false;
-        try {
+        boolean status=false;
+        try{
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getNetworkInfo(0);
-            if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                status = true;
-            } else {
+            if (netInfo != null && netInfo.getState()==NetworkInfo.State.CONNECTED) {
+                status= true;
+            }else {
                 netInfo = cm.getNetworkInfo(1);
-                if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED)
-                    status = true;
+                if(netInfo!=null && netInfo.getState()==NetworkInfo.State.CONNECTED)
+                    status= true;
             }
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
             return false;
         }
         return status;
-
     }
 
-
-    public void invokeLogin(View view) {
+    public void invokeLogin(View view){
 
         if (isNetworkOnline()) {
             usernametxt = username.getText().toString();
             passwordtxt = password.getText().toString();
+
             String n = username.getText().toString();
             String ph = password.getText().toString();
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Name, n);
             editor.putString(password2, ph);
             editor.commit();
+
             login(usernametxt, passwordtxt);
-        } else {
+        }
+        else
+        {
             Toast.makeText(getApplicationContext(), "Aucune connexion internet", Toast.LENGTH_LONG).show();
         }
-
     }
 
     public void invokeCreate(View view) {
@@ -125,11 +130,12 @@ public class MainActivity extends AppCompatActivity {
         if (isNetworkOnline()) {
             Intent intent2 = new Intent(MainActivity.this, CreateAccount.class);
             startActivity(intent2);
-        } else {
+        }
+        else
+        {
             Toast.makeText(getApplicationContext(), "Aucune connexion internet", Toast.LENGTH_LONG).show();
         }
-
-        // finish();
+       // finish();
     }
 
 
@@ -149,14 +155,8 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < jsonArray.length(); i++) {
                 String born = jsonArray.getJSONObject(i).getString("born");
                 String values[] = born.split("/");
-                Log.i("annee", values[2].trim());
-                int annneeuser = Integer.parseInt(values[2]);
-                int yearnow = dateyear.get(dateyear.YEAR);
-                ageuser = yearnow - annneeuser;
-
-
+                Log.i("annee",values[2]);
             }
-
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -169,13 +169,13 @@ public class MainActivity extends AppCompatActivity {
         String s = null;
         try {
             s = la.get().trim();
-            if (s.equalsIgnoreCase("success")) {
+            if(s.equalsIgnoreCase("success")){
                 Intent intent = new Intent(MainActivity.this, bouquet.class);
-                intent.putExtra("age", ageuser);
+                //intent.putExtra(USER_NAME, username);
 
                 startActivity(intent);
-                //finish();
-            } else {
+                finish();
+            }else {
                 Toast.makeText(getApplicationContext(), "Identifiant ou mot de passe invalide", Toast.LENGTH_LONG).show();
             }
         } catch (InterruptedException e) {
@@ -183,10 +183,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -208,17 +205,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /*public void clearSharedPreference() {
-        SharedPreferences settings;
-        SharedPreferences.Editor editor;
-
-        settings = MainActivity.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        editor = settings.edit();
-
-        editor.clear();
-        editor.commit();
-    }*/
-
 
 }

@@ -21,6 +21,7 @@ public class VideoViewActivity extends AppCompatActivity {
     ProgressDialog pDialog;
     VideoView videoview;
 
+    android.app.ActionBar actionBar;
 
     // Insert your Video URL
     String VideoURL = null;
@@ -29,7 +30,6 @@ public class VideoViewActivity extends AppCompatActivity {
 
     String nom = null;
 
-    //cette classe permet d'utiliser le lecteur afin de streamer notre flux
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);//tout les variable constructeur de la classe mere
@@ -51,19 +51,28 @@ public class VideoViewActivity extends AppCompatActivity {
         pDialog.show();
         Intent it = getIntent();
         //getActionBar().hide();
-//on recupere les information envoyer par le intent de lautre classe java afin de les reutuliser
+
         nom = it.getStringExtra("nom");
 
         VideoURL = it.getStringExtra("lien");
 
         nom_chaine = Toast.makeText(getApplicationContext(), nom, Toast.LENGTH_SHORT);
 
-        nom_chaine.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+        nom_chaine.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
 
+/*
+        videoview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                actionBar.hide();
+                return true;
+            }
+        });
+*/
         try {
             // Start the MediaController
             MediaController mediacontroller = new MediaController(
-                    VideoViewActivity.this, false);
+                    VideoViewActivity.this,false);
             mediacontroller.setAnchorView(videoview);
 
             // Get the URL from String VideoURL
@@ -71,15 +80,14 @@ public class VideoViewActivity extends AppCompatActivity {
             videoview.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    nom_chaine.show();
-                    return false;
+                        nom_chaine.show();
+                        return false;
                 }
             });
 
             Uri video = Uri.parse(VideoURL);
             videoview.setMediaController(mediacontroller);
             videoview.setVideoURI(video);
-
 
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
@@ -93,9 +101,7 @@ public class VideoViewActivity extends AppCompatActivity {
                 pDialog.dismiss();
                 videoview.start();
             }
-
         });
 
     }
-
 }

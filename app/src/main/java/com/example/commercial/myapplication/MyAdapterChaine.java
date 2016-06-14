@@ -23,19 +23,20 @@ public class MyAdapterChaine extends BaseAdapter {
     private List<Chaine> listChaine;
     private Context context;
 
-    public MyAdapterChaine(Context context, List<Chaine> listChaine) {
+    public MyAdapterChaine(Context context, List<Chaine> listChaine){
 
         this.listChaine = listChaine;
         this.context = context;
     }
 
-    public MyAdapterChaine filter(String chaine) {
+    public MyAdapterChaine filter (String chaine)
+    {
         ArrayList<Chaine> listC = new ArrayList<Chaine>();
         //TODO ajouter les chaine
 
 
         for (Chaine c : this.listChaine) { //Parcour la liste de chaine de base qui est stoqué dans la BDD
-            if (c.getNom().toLowerCase().contains(chaine.toLowerCase())) //compare les lettre entrer par chaque nom de chaine
+            if(c.getNom().toLowerCase().contains(chaine.toLowerCase())) //compare les lettre entrer par chaque nom de chaine
             {
                 listC.add(c); //ajoute dans la nouvelle list si elle existe
             }
@@ -44,7 +45,7 @@ public class MyAdapterChaine extends BaseAdapter {
         //Afficher en mode Chaine et logo
         MyAdapterChaine mac = new MyAdapterChaine(this.context, listC);
 
-        return mac;
+        return  mac;
     }
 
     @Override
@@ -65,12 +66,12 @@ public class MyAdapterChaine extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         MyViewChaine holder;
-//permet de faire le chargement de ce que lont voit seulement principe de la listview
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
+        LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.custom, null);
+            convertView =layoutInflater.inflate(R.layout.custom, null);
             holder = new MyViewChaine();
-            holder.nom = (TextView) convertView.findViewById(R.id.nomChaine);
+            holder.nom =  (TextView) convertView.findViewById(R.id.nomChaine);
             holder.logo = (ImageView) convertView.findViewById(R.id.logoChaine);
 
             convertView.setTag(holder);
@@ -79,16 +80,15 @@ public class MyAdapterChaine extends BaseAdapter {
             holder = (MyViewChaine) convertView.getTag();
         }
 
-        Chaine chaine = (Chaine) getItem(position);
+        Chaine chaine = (Chaine)getItem(position);
         holder.nom.setText(chaine.getNom());
         holder.logo.setImageBitmap(chaine.getLogoBitmap());
-        //holder.logo = chaine.getLogo();
 
         return convertView;
+        
     }
 
-
-    private static class MyViewChaine {
+    private static class MyViewChaine{
         TextView nom;
         ImageView logo;
         String link;
